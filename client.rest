@@ -1,0 +1,111 @@
+@baseUrl = http://localhost:3000
+
+@authToken = {{authenticate.response.body.accessToken}}
+
+@refreshToken = {{authenticate.response.body.refreshToken}}
+
+### Recados tods
+GET {{baseUrl}}/recados/?limit=10&offset=0
+
+### Recados id
+GET {{baseUrl}}/recados/8
+
+### Enviar recados
+POST {{baseUrl}}/recados/
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+  {
+    "texto": "Recado novo",
+    "paraId": 1
+  }
+
+### Autaliza recados
+PATCH {{baseUrl}}/recados/15
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+  {
+    "texto": "Este é um recado de teste atualizado",
+    "lido": false
+  }
+
+### apaga id
+DELETE {{baseUrl}}/recados/15
+Authorization: Bearer {{authToken}}
+
+
+#### Pessoas
+GET {{baseUrl}}/pessoas/
+Authorization: Bearer {{authToken}}
+
+### Pessoas por id
+GET {{baseUrl}}/pessoas/13
+
+### Criar pessoas
+POST {{baseUrl}}/pessoas/
+Content-Type: application/json
+
+  {
+    "email": "jorge4@teste.com",
+    "password": "12345678",
+    "nome": "Jorge"
+  }
+
+### Autaliza pessoas
+PATCH {{baseUrl}}/pessoas/1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+  {
+    "password": "666666",
+    "nome": "Lucas"
+  }
+
+
+### apaga pessoas
+DELETE {{baseUrl}}/pessoas/15
+Authorization: Bearer {{authToken}}
+
+
+
+### LOGIN e autenticação
+# @name authenticate
+POST  {{baseUrl}}/auth/
+Content-Type: application/json
+
+  {
+    "password": "666666",
+    "email": "teste2@teste.com"
+  }
+
+### Re-autheticação
+# @name reAuthenticate
+POST {{baseUrl}}/auth/refresh/ 
+Content-Type: application/json
+
+  {
+    "refreshToken": "{{refreshToken}}"
+  }
+
+### Upload
+
+### ver ft, nome da ft
+GET {{baseUrl}}/pictures/10.jpg
+
+
+# Upload 
+### Foto da pessoa -- fiz no postman
+POST {{baseUrl}}/pessoas/upload-picture/ 
+Authorization: Bearer {{authToken}} 
+Content-Type: multipart/form-data; boundary=----BoundaryDelimitadorHttp
+
+------BoundaryDelimitadorHttp 
+Content-Disposition: form-data; name="file"; filename="man.png" 
+Content-Type: image/png
+
+<./dev/images/man.png 
+------BoundaryDelimitadorHttp--
+
+
+
