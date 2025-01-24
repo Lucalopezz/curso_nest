@@ -12,6 +12,7 @@ import { PessoasService } from 'src/pessoas/pessoas.service';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { RecadosUtils } from './recados.utils';
 import { TokenPayloadDto } from 'src/auth/dto/token-payload.dto';
+import { EmailService } from 'src/email/email.service';
 
 @Injectable()
 export class RecadosService {
@@ -20,6 +21,7 @@ export class RecadosService {
     private readonly recadoRepository: Repository<Recado>,
     private readonly pessoasService: PessoasService,
     private readonly recadoUtils: RecadosUtils, // injeção de dependencia
+    private readonly emailService: EmailService,
   ) {}
 
   throwNewNotFoundExeception() {
@@ -91,8 +93,14 @@ export class RecadosService {
       data: new Date(),
     };
 
-    const recado = await this.recadoRepository.create(novoRecado);
+    const recado = this.recadoRepository.create(novoRecado);
     await this.recadoRepository.save(recado);
+
+    await this.emailService.sendEmail(
+      para.email,
+      `Você recebeu um recado de "${de.nome}" <${de.email}>`,
+      createRecadoDto.texto,
+    );
 
     return {
       ...recado,

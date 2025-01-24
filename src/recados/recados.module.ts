@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Recado } from './entities/recado.entity';
 import { PessoasModule } from 'src/pessoas/pessoas.module';
 import { RecadosUtils } from './recados.utils';
+import { EmailModule } from 'src/email/email.module';
 // import { MyDynamicModule } from 'src/my-dynamic/my-dynamic.module';
 // import { RegexProtocol } from 'src/common/regex/regex.protocol';
 // import { RemoveSpacesRegex } from 'src/common/regex/remove-spaces.regex';
@@ -23,6 +24,7 @@ import { RecadosUtils } from './recados.utils';
     //   apiKey: '1234',
     //   apiUrl: 'http://blabla',
     // }),
+    EmailModule,
   ],
   controllers: [RecadosController],
   providers: [

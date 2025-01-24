@@ -3,6 +3,8 @@ import { AppModule } from './app/app.module';
 import { ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
 
+
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(
@@ -18,6 +20,7 @@ async function bootstrap() {
       origin: 'http://meusite.com', // -> frontend
     });
   }
+
 
   await app.listen(process.env.APP_PORT ?? 3000);
 }
